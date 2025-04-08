@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:16' // or any other Node version you want
+        }
+    }
 
     stages {
         stage('Build') {
@@ -12,15 +16,14 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                // If you have test scripts in package.json
-                // sh 'npm test'
+                sh 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // You can add deployment commands here later
+                // deploy steps go here
             }
         }
     }
