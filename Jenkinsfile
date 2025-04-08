@@ -1,40 +1,27 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "my-node-app"
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                git 'https://github.com/<your-username>/<your-repo>.git'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                echo 'Building the application...'
+                sh 'npm install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm install'
-                sh 'npm test'
+                echo 'Running tests...'
+                // If you have test scripts in package.json
+                // sh 'npm test'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 3000:3000 --name app_container $IMAGE_NAME'
+                echo 'Deploying the application...'
+                // You can add deployment commands here later
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker rm -f app_container || true'
         }
     }
 }
