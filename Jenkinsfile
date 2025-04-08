@@ -1,21 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:16' // or any other Node version you want
-        }
-    }
+    agent any
 
     stages {
-        stage('Build') {
+        stage('Install Dependencies') {
             steps {
-                echo 'Building the application...'
                 sh 'npm install'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
                 sh 'npm test'
             }
         }
@@ -23,7 +17,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // deploy steps go here
             }
         }
     }
